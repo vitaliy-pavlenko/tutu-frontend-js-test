@@ -49,14 +49,28 @@ function TableSort() {
     this.sort = function(e) {
         if (e.target.tagName != 'TH') return;
         var sortField = e.target.getAttribute('data-sort-field');
+
         if (_currentField === sortField) {
             _store = _store.reverse();
+            e.target.setAttribute('data-sort-dir', e.target.getAttribute('data-sort-dir') == 'ASC' ? 'DESC' : 'ASC');
         } else {
+
+            [].forEach.call(
+                _thead.querySelectorAll('th'),
+                row => {
+                    row.classList.remove('table-sort__sorted');
+            });
+
             _store = _store.sort((a, b) => {
                 return a[sortField] > b[sortField] ? 1 : -1;
             });
+
             _currentField = sortField;
+
+            e.target.classList.add('table-sort__sorted');
+            e.target.setAttribute('data-sort-dir', 'ASC');
         }
+
         this.emit('update');
     }
 

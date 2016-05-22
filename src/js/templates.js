@@ -1,7 +1,7 @@
 module.exports = {
 
     tableTpl: function(data) {
-        return `<table class="table">
+        return `<table class="table js-table-sort">
             <thead>${this.theadTpl()}</thead>
             <tbody>${ data.map(this.tbodyTpl).join('') }</tbody>
         </table>`;
