@@ -13,7 +13,9 @@ function TableSort() {
         _tbody,
         _store,
         _currentField,
-        _card;
+        _card,
+        _searchInput,
+        _searchBtn;
 
     this.build = function(container) {
         _container = document.querySelector(container);
@@ -30,6 +32,8 @@ function TableSort() {
         _thead = _table.querySelector('thead');
         _tbody = _table.querySelector('tbody');
         _card = _container.querySelector('.table-sort__card');
+        _searchBtn = _container.querySelector('.js-search');
+        _searchInput = _container.querySelector('input');
         this.on('update', this.render);
         this.events();
     };
@@ -47,6 +51,7 @@ function TableSort() {
     this.events = function() {
         _thead.addEventListener('click', this.sort.bind(this));
         _tbody.addEventListener('click', this.showInfo);
+        _searchBtn.addEventListener('click', this.search.bind(this));
     };
 
     this.sort = function(e) {
@@ -87,6 +92,25 @@ function TableSort() {
             }
         });
         _card.innerHTML = html;
+    };
+
+    this.search = function(e) {
+        e.preventDefault();
+
+        var searchStr = _searchInput.value.toString().toLowerCase();
+        if (searchStr) {
+            _store = _data.filter(raw => {
+                for (var prop in raw) {
+                    if (raw.hasOwnProperty(prop)) {
+                        if (new RegExp(searchStr).test(raw[prop].toString().toLowerCase())) return true;
+                    }
+                }
+            });
+        } else {
+            _store = _data;
+        }
+
+        this.emit('update');
     };
 }
 
