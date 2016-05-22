@@ -12,7 +12,8 @@ function TableSort() {
         _thead,
         _tbody,
         _store,
-        _currentField;
+        _currentField,
+        _card;
 
     this.build = function(container) {
         _container = document.querySelector(container);
@@ -28,6 +29,7 @@ function TableSort() {
         _table = _container.querySelector('table');
         _thead = _table.querySelector('thead');
         _tbody = _table.querySelector('tbody');
+        _card = _container.querySelector('.table-sort__card');
         this.on('update', this.render);
         this.events();
     };
@@ -44,6 +46,7 @@ function TableSort() {
 
     this.events = function() {
         _thead.addEventListener('click', this.sort.bind(this));
+        _tbody.addEventListener('click', this.showInfo);
     };
 
     this.sort = function(e) {
@@ -72,8 +75,19 @@ function TableSort() {
         }
 
         this.emit('update');
-    }
+    };
 
+    this.showInfo = function(e) {
+        if (e.target.tagName != 'TD') return;
+        var id = e.target.parentNode.getAttribute('data-id');
+        var html = '';
+        _store.forEach(raw => {
+            if (raw.id == id) {
+                html = tpls.cardTpl(raw);
+            }
+        });
+        _card.innerHTML = html;
+    };
 }
 
 module.exports = TableSort;
