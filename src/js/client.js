@@ -29,6 +29,10 @@ function smallDataHandler(e) {
         .then(data => {
             ts.setData(data);
             hideLoader();
+        })
+        .catch(e => {
+            console.error(e);
+            alert('Ошибка! Попробуйте снова');
         });
 }
 
@@ -41,6 +45,10 @@ function bigDataHandler(e) {
             ts.setData(data);
             buildPagination();
             hideLoader();
+        })
+        .catch(e => {
+            console.error(e);
+            alert('Ошибка! Попробуйте снова');
         });
 }
 
@@ -79,6 +87,10 @@ function buildPagination() {
                 ts.setData(data);
                 e.target.parentNode.classList.add('active');
                 hideLoader();
+            })
+            .catch(e => {
+                console.error(e);
+                alert('Ошибка! Попробуйте снова');
             });
     });
 }
