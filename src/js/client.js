@@ -17,6 +17,7 @@ function json(res) {
 }
 
 function getData(resource) {
+    showLoader();
     return fetch(resource);
 }
 
@@ -25,7 +26,10 @@ function smallDataHandler(e) {
 
     getData('http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}')
         .then(json)
-        .then(data => ts.setData(data));
+        .then(data => {
+            ts.setData(data);
+            hideLoader();
+        });
 }
 
 function bigDataHandler(e) {
@@ -36,6 +40,7 @@ function bigDataHandler(e) {
         .then(data => {
             ts.setData(data);
             buildPagination();
+            hideLoader();
         });
 }
 
@@ -73,8 +78,17 @@ function buildPagination() {
             .then(data => {
                 ts.setData(data);
                 e.target.parentNode.classList.add('active');
+                hideLoader();
             });
     });
+}
+
+function showLoader() {
+    document.querySelector('.loader').classList.remove('hide');
+}
+
+function hideLoader() {
+    document.querySelector('.loader').classList.add('hide');
 }
 
 document.addEventListener('DOMContentLoaded', event => {
