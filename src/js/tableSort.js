@@ -11,7 +11,8 @@ function TableSort() {
         _table,
         _thead,
         _tbody,
-        _store;
+        _store,
+        _currentField;
 
     this.build = function(container) {
         _container = document.querySelector(container);
@@ -28,6 +29,7 @@ function TableSort() {
         _thead = _table.querySelector('thead');
         _tbody = _table.querySelector('tbody');
         this.on('update', this.render);
+        this.events();
     };
 
     this.render = function() {
@@ -39,6 +41,24 @@ function TableSort() {
         _data = data;
         this.emit('update');
     };
+
+    this.events = function() {
+        _thead.addEventListener('click', this.sort.bind(this));
+    };
+
+    this.sort = function(e) {
+        if (e.target.tagName != 'TH') return;
+        var sortField = e.target.getAttribute('data-sort-field');
+        if (_currentField === sortField) {
+            _store = _store.reverse();
+        } else {
+            _store = _store.sort((a, b) => {
+                return a[sortField] > b[sortField] ? 1 : -1;
+            });
+            _currentField = sortField;
+        }
+        this.emit('update');
+    }
 
 }
 
