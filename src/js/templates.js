@@ -1,7 +1,15 @@
 module.exports = {
 
     tableTpl: function(data) {
-        return `<table class="table js-table-sort">
+        return `<div class="collapse navbar-collapse">
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Что искать?">
+                </div>
+                <a href="#" class="btn btn-default js-search">Поиск</a>
+            </form>
+        </div>
+        <table class="table js-table-sort">
             <thead>${this.theadTpl()}</thead>
             <tbody>${ data.map(this.tbodyTpl).join('') }</tbody>
         </table>

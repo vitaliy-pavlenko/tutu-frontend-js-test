@@ -35,10 +35,6 @@ function bigDataHandler(e) {
         .then(data => ts.setData(data));
 }
 
-function searchHandler(e) {
-    e.preventDefault();
-}
-
 document.addEventListener('DOMContentLoaded', event => {
     delegate(
         document.querySelectorAll('.navbar'),
@@ -52,13 +48,6 @@ document.addEventListener('DOMContentLoaded', event => {
         '.js-big-data',
         'click',
         bigDataHandler
-    );
-
-    delegate(
-        document.querySelectorAll('.navbar'),
-        '.js-search',
-        'click',
-        searchHandler
     );
 
     ts.build('.js-table-container');
