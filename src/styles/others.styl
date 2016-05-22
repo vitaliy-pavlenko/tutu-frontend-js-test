@@ -16,19 +16,22 @@
   background #000
   opacity 0.6
 
-.loader-shade
-  border-radius 50%
-  width 100px
-  height 100px
-  border 15px solid #fff
-  border-top-color #2565ee
-  animation spin 8s infinite linear
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -50px;
-  margin-left: -50px;
-  z-index: 99999;
+  &.hide
+    display none
+
+  .loader__loader-shade
+    border-radius 50%
+    width 100px
+    height 100px
+    border 15px solid #fff
+    border-top-color #2565ee
+    animation spin 8s infinite linear
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    z-index: 99999;
 
 @keyframes spin
   0%
