@@ -23,8 +23,8 @@ function TableSort() {
         this.init();
     };
 
-    this.getData = function() {
-        return _data;
+    this.getStore = function() {
+        return _store;
     };
 
     this.init = function() {
@@ -51,7 +51,12 @@ function TableSort() {
     this.events = function() {
         _thead.addEventListener('click', this.sort.bind(this));
         _tbody.addEventListener('click', this.showInfo);
-        _searchBtn.addEventListener('click', this.search.bind(this));
+        _searchBtn.addEventListener('click', e => {
+            e.preventDefault();
+            var searchStr = _searchInput.value.toString().toLowerCase();
+            _store = this.search(searchStr);
+            this.emit('update');
+        });
     };
 
     this.sort = function(e) {
@@ -94,23 +99,20 @@ function TableSort() {
         _card.innerHTML = html;
     };
 
-    this.search = function(e) {
-        e.preventDefault();
-
-        var searchStr = _searchInput.value.toString().toLowerCase();
-        if (searchStr) {
-            _store = _data.filter(raw => {
+    this.search = function(searchString) {
+        var data;
+        if (searchString) {
+            data = _data.filter(raw => {
                 for (var prop in raw) {
                     if (raw.hasOwnProperty(prop)) {
-                        if (new RegExp(searchStr).test(raw[prop].toString().toLowerCase())) return true;
+                        if (new RegExp(searchString).test(raw[prop].toString().toLowerCase())) return true;
                     }
                 }
             });
         } else {
-            _store = _data;
+            data = _data;
         }
-
-        this.emit('update');
+        return data;
     };
 }
 
